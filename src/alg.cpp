@@ -1,19 +1,25 @@
 // Copyright 2021 NNTU-CS
 int countPairs1(int *arr, int len, int value) {
   int pairs = 0;
-  for (int i = 0; i < len; i++)
-    for(int j = i + 1; j < len; j++)
-      if (arr[i] + arr[j] == value)
+  for (int i = 0; i < len; i++) {
+    for(int j = i + 1; j < len; j++) {
+      if (arr[i] + arr[j] == value) {
         pairs++;
+      }
+    }
+  }
   return pairs;
 }
 
 int countPairs2(int *arr, int len, int value) {
   int pairs = 0;
-  for (int i = 0; i < len - 1; i++)
-    for (int j = len - 1; i < j; j--)
-      if (arr[i] + arr[j] == value)
+  for (int i = 0; i < len - 1; i++) {
+    for (int j = len - 1; i < j; j--) {
+      if (arr[i] + arr[j] == value) {
         pairs++;
+      }
+    }
+  }
   return pairs;
 }
 
@@ -34,6 +40,9 @@ int lower_bound(int *arr, int size, int value) {
 }
 
 int countPairs3(int *arr, int len, int value) {
-  return lower_bound(arr, len, value + 1) - lower_bound(arr, len, value);
-  return 0;
+  int pairs = 0;
+  for (int i = 0; i < len; i++) {
+    pairs += lower_bound(arr, len, value - arr[i] + 1) - lower_bound(arr, len, value - arr[i]);
+  }
+  return pairs/2;
 }
