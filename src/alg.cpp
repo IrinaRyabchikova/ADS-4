@@ -40,11 +40,10 @@ int lower_bound(int *arr, int size, int value) {
 }
 
 int countPairs3(int *arr, int len, int value) {
-  int pairs = 0;
-  for (int i = 0; i < len; i++) {
-    if (arr[i] < value - arr[i]) {
-      pairs += lower_bound(arr, len, value - arr[i] + 1) - lower_bound(arr, len, value - arr[i]);
-    }
+  int pairs = 0, i = 0;
+  while (arr[i] < value - arr[i]) {
+    pairs += (lower_bound(arr, len, arr[i] + 1) - lower_bound(arr, len, arr[i])) * (lower_bound(arr, len, value - arr[i] + 1) - lower_bound(arr, len, value - arr[i]));
+    i = lower_bound(arr, len, arr[i] + 1);
   }
   return pairs;
 }
