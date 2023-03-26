@@ -50,17 +50,14 @@ int countPairs2(int *arr, int len, int value) {
 }
 
 int countPairs3(int *arr, int len, int value) {
-  int pairs = 0, i = 0;
-  while (i < len) {
-    int count1 = (lower_bound(arr, len, arr[i] + 1)
-              - lower_bound(arr, len, arr[i]));
-    int count2 = (lower_bound(arr, len, value - arr[i] + 1)
+  int pairs = 0;
+  for (int i = 0; i < len; i++) {
+    int count1 = (lower_bound(arr, len, value - arr[i] + 1)
               - lower_bound(arr, len, value - arr[i]));
-    pairs += count1 * count2;
+    pairs += count1;
     if (arr[i] * 2 == value) {
-      pairs -= count2;
+      pairs--;
     }
-    i = lower_bound(arr, len, arr[i] + 1);
   }
   pairs /= 2;
   return pairs;
