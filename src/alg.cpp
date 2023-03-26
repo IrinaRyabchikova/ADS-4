@@ -42,7 +42,9 @@ int lower_bound(int *arr, int size, int value) {
 int countPairs3(int *arr, int len, int value) {
   int pairs = 0;
   for (int i = 0; i < len; i++) {
-    pairs += lower_bound(arr, len, value - arr[i] + 1) - lower_bound(arr, len, value - arr[i]);
+    if (arr[i] < value - arr[i]) {
+      pairs += lower_bound(arr, len, value - arr[i] + 1) - lower_bound(arr, len, value - arr[i]);
+    }
   }
-  return pairs/2;
+  return pairs;
 }
