@@ -27,26 +27,41 @@ int countPairs1(int *arr, int len, int value) {
   return pairs;
 }
 
+
 int countPairs2(int *arr, int len, int value) {
   int pairs = 0;
-  for (int i = 0; i < len - 1; i++) {
-    for (int j = len - 1; i < j; j--) {
-      if (arr[i] + arr[j] == value) {
+  int l = 0;
+  int r = len - 1;
+  while (l < r) {
+    for (int i = l + 1; i <= r; i++) {
+      if (arr[l] + arr[i] == value) {
         pairs++;
       }
     }
+    l++;
+    for (int j = r - 1; j > l; j--) {
+      if (arr[r] + arr[j] == value) {
+        pairs++;
+      }
+    }
+    r--;
   }
   return pairs;
 }
 
 int countPairs3(int *arr, int len, int value) {
   int pairs = 0, i = 0;
-  while (arr[i] < value - arr[i]) {
-    pairs += (lower_bound(arr, len, arr[i] + 1)
-              - lower_bound(arr, len, arr[i])) *
-             (lower_bound(arr, len, value - arr[i] + 1)
+  while (i < len) {
+    int count1 = (lower_bound(arr, len, arr[i] + 1)
+              - lower_bound(arr, len, arr[i]));
+    int count2 = (lower_bound(arr, len, value - arr[i] + 1)
               - lower_bound(arr, len, value - arr[i]));
+    pairs += count1 * count2;
+    if (arr[i] * 2 == value) {
+      pairs -= count2;
+    }
     i = lower_bound(arr, len, arr[i] + 1);
   }
+  pairs /= 2;
   return pairs;
 }
